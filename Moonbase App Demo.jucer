@@ -4,11 +4,19 @@
               addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1" companyName="Demo Co."
               companyWebsite="https://moonbase.sh" displaySplashScreen="1">
   <MAINGROUP id="v21d2S" name="Moonbase App Demo">
+    <GROUP id="{50570929-8E34-C987-3FC0-81918A9A06B6}" name="Assets">
+      <FILE id="j7sd5w" name="MoonbaseLogo.svg" compile="0" resource="1"
+            file="Assets/MoonbaseLogo.svg"/>
+    </GROUP>
     <GROUP id="{C7630891-B984-A9C8-1B86-539493A81AA5}" name="Source">
       <FILE id="dVVZbs" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
       <FILE id="HkXk4l" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="ZXFBVh" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
+    </GROUP>
+    <GROUP id="{86CD1D01-AFFA-E8DB-0448-D9F06DFFF1E0}" name="Resources">
+      <FILE id="uukOQV" name="moonbase_api_config.json" compile="0" resource="1"
+            file="Resources/moonbase_api_config.json"/>
     </GROUP>
   </MAINGROUP>
   <MODULES>

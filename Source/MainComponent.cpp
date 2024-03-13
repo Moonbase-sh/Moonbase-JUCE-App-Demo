@@ -1,13 +1,90 @@
 #include "MainComponent.h"
 
 //==============================================================================
+//==============================================================================
+CompanyLogo::CompanyLogo ()
+{
+    logo = Drawable::createFromImageData (BinaryData::MoonbaseLogo_svg, 
+                                          BinaryData::MoonbaseLogo_svgSize);
+
+    #if ANIMATE_COMPANY_LOGO
+        jitterX.reset (15);
+        jitterY.reset (15);
+        startTimerHz (30);
+    #endif
+}
+
+void CompanyLogo::timerCallback () 
+{
+    // this is just a simple example of how to animate the logo... this particular code makes the logo shiver
+    const auto jitterRange = 0.1f;
+    jitterX.setTargetValue (jmap (random.nextFloat(), 0.f, 1.f, -jitterRange, jitterRange));
+    jitterY.setTargetValue (jmap (random.nextFloat(), 0.f, 1.f, -jitterRange, jitterRange));
+    repaint ();
+}
+
+void CompanyLogo::paint (Graphics& g)
+{
+    const auto width = getWidth ();
+    const auto height = getHeight ();
+    auto area = getLocalBounds().toFloat().reduced (height * 0.1f);
+    
+    #if ANIMATE_COMPANY_LOGO
+        const auto currentJitterX = jitterX.getNextValue ();
+        const auto currentJitterY = jitterY.getNextValue ();
+        area = area.translated (width * currentJitterX, height * currentJitterY);
+    #endif
+    
+    if (logo != nullptr)
+        logo->drawWithin (g, area, RectanglePlacement::centred, 1.0f);
+}
+
+//==============================================================================
+//==============================================================================
 MainComponent::MainComponent()
 {
-    // Make sure you set the size of the component after
-    // you add any child components.
+    addAndMakeVisible (showActivationUiButton);
+    showActivationUiButton.onClick = [&]()
+    {
+        /*
+            Moonbase API member activation UI visibility
+
+            Use this macro to show the activation UI on user interaction like the click of a button.
+        */
+        MOONBASE_SHOW_ACTIVATION_UI;
+    };
+
+    /*
+        Moonbase Activation UI member initialization
+
+        Use this macro to initialize the Moonbase Activation UI details.
+    */
+    jassert (activationUI != nullptr);
+    if (activationUI != nullptr)
+    {
+        // There are a max of 2 lines of text on the welcome screen, define them here
+        activationUI->setWelcomePageText ("Weightless", "License Management");
+
+        // Set the spinner logo, this is the little icon inside the spinner, when waiting for web responses
+        activationUI->setSpinnerLogo (Drawable::createFromImageData (BinaryData::MoonbaseLogo_svg, 
+                                                                     BinaryData::MoonbaseLogo_svgSize));
+
+        // Scale the spinner logo as required for your asset if needed. See Submodules/moonbase_JUCEClient/Assets/Source/SVG/OverlayAssets for ideal assets.
+        // activationUI->setSpinnerLogoScale (0.5f);
+        
+        // Set the company logo, this is the logo that is displayed on the welcome screen and the activated info screen
+        activationUI->setCompanyLogo (std::make_unique<CompanyLogo> ());
+
+        // Scale the company logo as required for your asset if needed. 
+        // activationUI->setCompanyLogoScale ((0.25f));
+        
+        // Scale the welcome button text as required - this is only needed if your app name is very long like "Moonbase App Demo"... default scale is 0.37 (37% height of button asset)
+        activationUI->setWelcomeButtonTextScale (0.3f);
+       
+    }
+
     setSize (800, 600);
 
-    // Some platforms require permissions to open input channels so request that here
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
         && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
     {
@@ -16,60 +93,69 @@ MainComponent::MainComponent()
     }
     else
     {
-        // Specify the number of input and output channels that we want to open
         setAudioChannels (2, 2);
     }
 }
 
 MainComponent::~MainComponent()
 {
-    // This shuts down the audio device and clears the audio source.
     shutdownAudio();
 }
 
 //==============================================================================
 void MainComponent::prepareToPlay (int samplesPerBlockExpected, double sampleRate)
 {
-    // This function will be called when the audio device is started, or when
-    // its settings (i.e. sample rate, block size, etc) are changed.
+    /*
+        Moonbase API member audio initialization
 
-    // You can use this function to initialise any resources you might need,
-    // but be careful - it will be called on the audio thread, not the GUI thread.
-
-    // For more details, see the help for AudioProcessor::prepareToPlay()
+        Use this macro to initialize the Moonbase API member for audio processing.
+    */
+    MOONBASE_PREPARE_TO_PLAY (sampleRate, samplesPerBlockExpected);
 }
 
 void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& bufferToFill)
 {
-    // Your audio-processing code goes here!
-
-    // For more details, see the help for AudioProcessor::getNextAudioBlock()
-
-    // Right now we are not producing any data, in which case we need to clear the buffer
-    // (to prevent the output of random noise)
     bufferToFill.clearActiveBufferRegion();
+
+    // -- > Your audio processing goes here < -- //
+
+    /*
+        Moonbase API member audio processing
+
+        Use this macro to process audio with the Moonbase API member. 
+        It's important, that this is the last call in the processBlock method.
+        Having this post-process will ensure, that the audio cuts out periodically, 
+        if the plugin is not authorized. 
+    */
+    
+    if (auto* buffer = bufferToFill.buffer)
+    {
+        MOONBASE_PROCESS (*buffer);
+    }
 }
 
 void MainComponent::releaseResources()
 {
-    // This will be called when the audio device stops, or when it is being
-    // restarted due to a setting change.
 
-    // For more details, see the help for AudioProcessor::releaseResources()
 }
 
 //==============================================================================
 void MainComponent::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
-
-    // You can add your drawing code here!
 }
 
 void MainComponent::resized()
 {
-    // This is called when the MainContentComponent is resized.
-    // If you add any child components, this is where you should
-    // update their positions.
+    /*
+        Moonbase Activation UI member resizing
+
+        Use this macro to make sure the activation UI always fits your plugin/app window.
+        
+    */
+    MOONBASE_RESIZE_ACTIVATION_UI;
+
+    Rectangle<int> activationUiButtonArea (250, 30);
+    activationUiButtonArea.setCentre (getLocalBounds ().getCentre ());
+    showActivationUiButton.setBounds (activationUiButtonArea);
 }
