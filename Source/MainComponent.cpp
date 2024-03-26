@@ -57,7 +57,7 @@ MainComponent::MainComponent()
     /*
         Moonbase Activation UI member initialization
 
-        Use this macro to initialize the Moonbase Activation UI details.
+        Use this pointer to initialize Moonbase Activation UI details.
     */
     jassert (activationUI != nullptr);
     if (activationUI != nullptr)
@@ -125,7 +125,7 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
         Use this macro to process audio with the Moonbase API member. 
         It's important, that this is the last call in the processBlock method.
         Having this post-process will ensure, that the audio cuts out periodically, 
-        if the plugin is not authorized. 
+        if the app is not authorized. 
     */
     
     if (auto* buffer = bufferToFill.buffer)

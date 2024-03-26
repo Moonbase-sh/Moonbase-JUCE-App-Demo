@@ -60,6 +60,7 @@ private:
     //==============================================================================
 
     MOONBASE_DECLARE_LICENSING_USING_JUCE_PROJECTINFO;
+    
     //==============================================================================
     /*
         After adding the Moonbase API member, you'll have to add implementations to
