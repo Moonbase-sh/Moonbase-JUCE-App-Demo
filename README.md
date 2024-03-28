@@ -39,7 +39,7 @@ Located in the [/Resources](/Resources) directory, the [moonbase_api_config.json
 When added to the .jucer project, the file is compiled as a `Binary Resource`. This is the default setting; when added like this, the Moonbase API will automatically find the resource and use it to configure the module.
 ![Projucer Config Image](/Assets/Readme/config.png "Projucer Config Image")
 <br>
-The config file for your project can be obtained from (@Tobi link). 
+The config file for your project can be generated per product in your Moonbase admin app, as part of the implementation guide for licensing of the product.
 <br>
 A Moonbase config file is a json formatted document, looking like this: 
 ```json
@@ -53,7 +53,7 @@ A Moonbase config file is a json formatted document, looking like this:
 ```
 
 **`productId`**
-The unique identifier for your product. This is the product ID you set when creating a product on the Moonbase Dashboard (@Tobi link).
+The unique identifier for your product. This is the product ID you set when creating a product in the Moonbase admin app.
 
 **`licenseFileLocation`**
 The location of the license file relative to the user application data directory (base directory). This is the location where the module will install the license file.
