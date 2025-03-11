@@ -145,7 +145,7 @@ void MainComponent::releaseResources()
 }
 
 //==============================================================================
-void MainComponent::onActivationUiVisibilityChanged ()
+void MainComponent::onActivationUiVisibilityChanged (const Moonbase::JUCEClient::ActivationUI::Visibility& visibility)
 {
     /*
         Moonbase Activation UI visibility changed
@@ -160,11 +160,11 @@ void MainComponent::onActivationUiVisibilityChanged ()
     if (activationUI == nullptr)
         return;
 
-    const auto activationVisibility = activationUI->isVisible ();
+   
     DBG (
         "Activation UI visibility changed.\n"
-        << "        Is visible: " << String (activationVisibility.first  ? "true" : "false")  << "\n"
-        << "   Must be visible: " << String (activationVisibility.second ? "true" : "false")
+        << "        Is visible: " << String (visibility.isVisible  ? "true" : "false")  << "\n"
+        << "   Must be visible: " << String (visibility.mustBeVisible ? "true" : "false")
     );
 }
 

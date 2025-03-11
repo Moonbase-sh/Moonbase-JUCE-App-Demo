@@ -93,7 +93,7 @@ private:
         
         //==============================================================================
         // Optional listener implementation for activation UI visibility changes
-        void onActivationUiVisibilityChanged () override;
+        void onActivationUiVisibilityChanged (const Moonbase::JUCEClient::ActivationUI::Visibility& visibility) override;
     
     //==============================================================================
     
