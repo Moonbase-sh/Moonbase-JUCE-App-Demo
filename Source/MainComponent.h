@@ -33,7 +33,8 @@ private:
 //==============================================================================
 /**
 */
-class MainComponent  : public juce::AudioAppComponent
+class MainComponent  : public juce::AudioAppComponent, 
+                       private Moonbase::JUCEClient::ActivationUI::Listener
 {
 public:
     //==============================================================================
@@ -89,6 +90,10 @@ private:
     //==============================================================================
         
         MOONBASE_DECLARE_AND_INIT_ACTIVATION_UI_SAME_PARENT;
+        
+        //==============================================================================
+        // Optional listener implementation for activation UI visibility changes
+        void onActivationUiVisibilityChanged () override;
     
     //==============================================================================
     

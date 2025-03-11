@@ -80,6 +80,8 @@ MainComponent::MainComponent()
         
         // Scale the welcome button text as required - this is only needed if your app name is very long like "Moonbase App Demo"... default scale is 0.37 (37% height of button asset)
         activationUI->setWelcomeButtonTextScale (0.3f);
+
+        activationUI->addListener (this);
        
     }
 
@@ -99,6 +101,9 @@ MainComponent::MainComponent()
 
 MainComponent::~MainComponent()
 {
+    if (activationUI != nullptr)
+        activationUI->removeListener (this);
+
     shutdownAudio();
 }
 
@@ -137,6 +142,30 @@ void MainComponent::getNextAudioBlock (const juce::AudioSourceChannelInfo& buffe
 void MainComponent::releaseResources()
 {
 
+}
+
+//==============================================================================
+void MainComponent::onActivationUiVisibilityChanged ()
+{
+    /*
+        Moonbase Activation UI visibility changed
+
+        Use this callback to react to changes in the activation UI visibility.
+        
+        This callback is "chatty" and will be called anytime *something* 
+        on the backend happened, that could warrant a visibility change.
+    */
+
+    jassert (activationUI != nullptr);
+    if (activationUI == nullptr)
+        return;
+
+    const auto activationVisibility = activationUI->isVisible ();
+    DBG (
+        "Activation UI visibility changed.\n"
+        << "        Is visible: " << String (activationVisibility.first  ? "true" : "false")  << "\n"
+        << "   Must be visible: " << String (activationVisibility.second ? "true" : "false")
+    );
 }
 
 //==============================================================================

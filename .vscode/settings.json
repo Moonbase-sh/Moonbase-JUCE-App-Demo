@@ -88,6 +88,9 @@
         "forward_list": "cpp",
         "valarray": "cpp",
         "variant": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "__verbose_abort": "cpp",
+        "execution": "cpp",
+        "print": "cpp"
     }
 }
