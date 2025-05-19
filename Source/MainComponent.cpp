@@ -85,6 +85,29 @@ MainComponent::MainComponent()
        
     }
 
+    jassert (moonbaseClient != nullptr);
+    if (moonbaseClient != nullptr)
+    {
+        moonbaseClient->registerGetAnalyticsCallback ([&] (bool& includeExtendedDefaultAnalytics) -> const juce::StringPairArray
+        {
+            // This is where you can add custom analytics. 
+            
+            StringPairArray analytics;
+            analytics.set ("customAnalytics", "This analytics collection should contain ALL analytics and this custom string...");
+
+            // If you don't want to send the default extended analytics, but only your own,
+            // you can set the includeExtendedDefaultAnalytics to false (true by default). 
+            // Otherwise you can ignore this parameter. 
+            // To test this, comment out the two lines above, and uncomment the 3 lines below.
+            
+            // includeExtendedDefaultAnalytics = false;
+            // StringPairArray analytics;
+            // analytics.set ("customAnalytics", "This analytics collection should contain only custom analytics, appVersion and platform ...");
+            
+            return analytics;
+        });
+    }
+
     setSize (800, 600);
 
     if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
