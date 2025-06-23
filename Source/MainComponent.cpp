@@ -88,6 +88,15 @@ MainComponent::MainComponent()
     jassert (moonbaseClient != nullptr);
     if (moonbaseClient != nullptr)
     {
+        // arg 1: transmitAnalytics - whether to transmit analytics at all, default is true.
+        // arg 2: includeExtendedDefaultAnalytics - whether to include the extended default analytics, default is false.
+        // Enbaling this will send a default set of analytics to the Moonbase backend. 
+        // The minimal default set without extended default analytics includes only app version and platform, and is reported by default, but you can choose to disable reporting altogether by setting arg1 false.
+        // The extended default analytics include JUCE Version, Host Description, Operating System, and much more. See Source/Impelementations/StaticMethods.h GetDefaultExtendedAnalytics() for more information. These are not included by default and you have to opt in by setting arg2 true here.
+        moonbaseClient->setTransmitAnalytics (true, true); 
+        
+        // Optionally you can add a custom analytics callback in order to collect custom analytics data.
+        // This also lets you dynamically overwrite the default extended analytics collection without changing the set default value for extended data. 
         moonbaseClient->registerGetAnalyticsCallback ([&] (bool& includeExtendedDefaultAnalytics) -> const juce::StringPairArray
         {
             // This is where you can add custom analytics. 
@@ -95,9 +104,9 @@ MainComponent::MainComponent()
             StringPairArray analytics;
             analytics.set ("customAnalytics", "This analytics collection should contain ALL analytics and this custom string...");
 
-            // If you don't want to send the default extended analytics, but only your own,
-            // you can set the includeExtendedDefaultAnalytics to false (true by default). 
-            // Otherwise you can ignore this parameter. 
+            // Note, that changing the value of includeExtendedDefaultAnalytics here, 
+            // will practically disable the 2nd argument of setTransmitAnalytics ()
+            // If you statically want to transmit (or not transmit) the extended analytics, you can ignore this parameter.
             // To test this, comment out the two lines above, and uncomment the 3 lines below.
             
             // includeExtendedDefaultAnalytics = false;
