@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="Qqo8I9" name="Moonbase App Demo" projectType="guiapp" useAppConfig="1"
               addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1" companyName="Demo Co."
-              companyWebsite="https://moonbase.sh" displaySplashScreen="1">
+              companyWebsite="https://moonbase.sh" displaySplashScreen="1"
+              version="0.11.3">
   <MAINGROUP id="v21d2S" name="Moonbase App Demo">
     <GROUP id="{50570929-8E34-C987-3FC0-81918A9A06B6}" name="Assets">
       <FILE id="j7sd5w" name="MoonbaseLogo.svg" compile="0" resource="1"

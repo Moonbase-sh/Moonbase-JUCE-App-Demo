@@ -82,7 +82,8 @@ MainComponent::MainComponent()
         activationUI->setWelcomeButtonTextScale (0.3f);
 
         activationUI->addListener (this);
-       
+
+        activationUI->enableUpdateBadge ();
     }
 
     jassert (moonbaseClient != nullptr);
