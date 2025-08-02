@@ -92,6 +92,7 @@
         "__verbose_abort": "cpp",
         "execution": "cpp",
         "print": "cpp",
-        "*.template": "cpp"
+        "*.template": "cpp",
+        "csignal": "cpp"
     }
 }

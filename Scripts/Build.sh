@@ -2,7 +2,7 @@
 
 DO_STANDALONE_BUILD=1
 
-BUILD_CONF="Debug"
+BUILD_CONF="${1:-Debug}"
 PRODUCTNAME="Moonbase App Demo"
 
 
