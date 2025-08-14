@@ -2,9 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build Plugins: Debug",
+            "label": "Build App: Debug",
             "type": "shell",
             "command": "./Scripts/Build.sh",
+            "presentation": {"echo": true, "reveal": "always", "focus": false, "panel": "shared", "showReuseMessage": false, "clear": true},
+        },
+        {
+            "label": "Build App: Release",
+            "type": "shell",
+            "command": "./Scripts/Build.sh Release",
             "presentation": {"echo": true, "reveal": "always", "focus": false, "panel": "shared", "showReuseMessage": false, "clear": true},
         }
     ]
