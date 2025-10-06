@@ -25,7 +25,6 @@ void CompanyLogo::timerCallback ()
 
 void CompanyLogo::paint (Graphics& g)
 {
-    const auto width = getWidth ();
     const auto height = getHeight ();
     auto area = getLocalBounds().toFloat().reduced (height * 0.1f);
     
