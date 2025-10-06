@@ -26,7 +26,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]]; then
 
     PROJUCER="$BASEDIR/Submodules/JUCE/extras/Projucer/Builds/VisualStudio2022/x64/Release/App/Projucer.exe"
-    BUILD_CMD="MSBuild.exe \"${PRODUCTNAME}_App.vcxproj\" -p:Configuration=$BUILD_CONF -p:Platform=x64 -p:AdditionalOptions=\"-WX ${AdditionalOptions}\""
+    BUILD_CMD="MSBuild.exe \"${PRODUCTNAME}_App.vcxproj\" -p:Configuration=$BUILD_CONF -p:Platform=x64"
 
 else
   echo "Error: This script can only be run on macOS or Windows"
