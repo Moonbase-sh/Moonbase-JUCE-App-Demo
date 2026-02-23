@@ -10,9 +10,7 @@ BASEDIR="$(realpath $(dirname "$0")/..)"
 JUCERPROJ="$BASEDIR/$PRODUCTNAME.jucer"
 
 "$BASEDIR/Scripts/BuildProjucer.sh" || exit $?
-"$BASEDIR/Submodules/moonbase_JUCEClient/Assets/Build.sh" || exit $?
-"$BASEDIR/Submodules/moonbase_JUCEClient/KeyIntegrity/IntegrityCheck.sh" "$BASEDIR/Resources/moonbase_api_config.json" || exit $?
-
+"$BASEDIR/Submodules/moonbase_JUCEClient/PreBuild.sh" "$BASEDIR/Resources/moonbase_api_config.json" || exit $?
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 

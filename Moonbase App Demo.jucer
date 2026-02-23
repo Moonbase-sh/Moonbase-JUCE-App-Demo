@@ -15,10 +15,6 @@
       <FILE id="ZXFBVh" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
     </GROUP>
-    <GROUP id="{86CD1D01-AFFA-E8DB-0448-D9F06DFFF1E0}" name="Resources">
-      <FILE id="uukOQV" name="moonbase_api_config.json" compile="0" resource="1"
-            file="Resources/moonbase_api_config.json"/>
-    </GROUP>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
