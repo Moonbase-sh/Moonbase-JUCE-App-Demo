@@ -1,6 +1,8 @@
 #!/bin/bash
 
-BASEDIR="$(dirname "$0")/.."
+set -euo pipefail
+
+BASEDIR="$(cd "$(dirname "$0")/../.." && pwd)"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
 
@@ -26,7 +28,7 @@ if [ -f "$BINARY" ]; then
     exit 0
 fi
 
-eval $BUILD_CMD || exit $?
+eval "$BUILD_CMD"
 
 if [ ! -f "$BINARY" ]; then
     echo "Error, Projucer binary not found after build..."

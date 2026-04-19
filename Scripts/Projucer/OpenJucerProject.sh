@@ -1,8 +1,10 @@
 #!/bin/bash
 
-BASEDIR="$(dirname "$0")/.."
+set -euo pipefail
 
-"$BASEDIR/Scripts/BuildProjucer.sh" || exit $?
+BASEDIR="$(cd "$(dirname "$0")/../.." && pwd)"
+
+bash "$BASEDIR/Scripts/Projucer/BuildProjucer.sh"
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   PROJUCER="$BASEDIR/Submodules/JUCE/extras/Projucer/Builds/MacOSX/build/Release/Projucer.app/Contents/MacOS/Projucer"
@@ -18,6 +20,6 @@ if [ ! -f "$PROJUCER" ]; then
     exit 1
 fi
 
-"$PROJUCER" "$BASEDIR/Moonbase App Demo.jucer" || exit $?
+"$PROJUCER" "$BASEDIR/Moonbase App Demo.jucer"
 
 exit 0

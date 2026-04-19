@@ -26,7 +26,7 @@ void CompanyLogo::timerCallback ()
 void CompanyLogo::paint (Graphics& g)
 {
     const auto height = getHeight ();
-    auto area = getLocalBounds().toFloat().reduced (height * 0.1f);
+    auto area = getLocalBounds().toFloat().reduced (static_cast<float> (height) * 0.1f);
     
     #if ANIMATE_COMPANY_LOGO
         const auto currentJitterX = jitterX.getNextValue ();
@@ -99,6 +99,7 @@ MainComponent::MainComponent()
         // This also lets you dynamically overwrite the default extended analytics collection without changing the set default value for extended data. 
         moonbaseClient->registerGetAnalyticsCallback ([&] (bool& includeExtendedDefaultAnalytics) -> const juce::StringPairArray
         {
+            juce::ignoreUnused (includeExtendedDefaultAnalytics);
             // This is where you can add custom analytics. 
             
             StringPairArray analytics;
@@ -179,6 +180,8 @@ void MainComponent::releaseResources()
 //==============================================================================
 void MainComponent::onActivationUiVisibilityChanged (const Moonbase::JUCEClient::ActivationUI::Visibility& visibility)
 {
+    juce::ignoreUnused (visibility);
+
     /*
         Moonbase Activation UI visibility changed
 

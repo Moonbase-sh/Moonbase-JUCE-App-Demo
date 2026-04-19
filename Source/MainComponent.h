@@ -60,7 +60,7 @@ private:
     */
     //==============================================================================
 
-    MOONBASE_DECLARE_LICENSING_USING_JUCE_PROJECTINFO;
+    MOONBASE_DECLARE_LICENSING_USING_JUCE_PROJECTINFO
     
     //==============================================================================
     /*
@@ -89,7 +89,7 @@ private:
     */
     //==============================================================================
         
-        MOONBASE_DECLARE_AND_INIT_ACTIVATION_UI_SAME_PARENT;
+        MOONBASE_DECLARE_AND_INIT_ACTIVATION_UI_SAME_PARENT
         
         //==============================================================================
         // Optional listener implementation for activation UI visibility changes
