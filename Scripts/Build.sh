@@ -2,6 +2,19 @@
 
 set -euo pipefail
 
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+SCRIPT_DIR="$(cd -- "$(dirname -- "$SCRIPT_PATH")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+
+WINDOWS_PS_HELPER="$ROOT_DIR/Submodules/moonbase_JUCEClient/Scripts/WindowsPowerShellSibling.sh"
+if [[ ! -f "$WINDOWS_PS_HELPER" ]]; then
+    echo "Error: Windows PowerShell helper not found at $WINDOWS_PS_HELPER"
+    exit 1
+fi
+
+source "$WINDOWS_PS_HELPER"
+moonbase_delegate_to_windows_powershell_if_needed "$SCRIPT_PATH" 0 "$@"
+
 show_help() {
     cat <<'EOF'
 Usage: ./Scripts/Build.sh [CONFIG] [--build-dir <path>] [--projucer] [--help]
@@ -21,9 +34,6 @@ Examples:
   ./Scripts/Build.sh Debug --projucer
 EOF
 }
-
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
 BUILD_CONF="Debug"
 BUILD_DIR=""
