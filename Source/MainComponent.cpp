@@ -120,16 +120,9 @@ MainComponent::MainComponent()
 
     setSize (800, 600);
 
-    if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
-        && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
-    {
-        juce::RuntimePermissions::request (juce::RuntimePermissions::recordAudio,
-                                           [&] (bool granted) { setAudioChannels (granted ? 2 : 0, 2); });
-    }
-    else
-    {
-        setAudioChannels (2, 2);
-    }
+    // This app only writes to the output. Opening the default input as well
+    // can force the output device to adopt the input's sample rate.
+    setAudioChannels (0, 2);
 }
 
 MainComponent::~MainComponent()
