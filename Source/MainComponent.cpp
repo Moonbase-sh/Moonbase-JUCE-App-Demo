@@ -88,6 +88,9 @@ MainComponent::MainComponent()
     jassert (moonbaseClient != nullptr);
     if (moonbaseClient != nullptr)
     {
+        DBG ("Moonbase JUCE Client " << moonbaseClient->getVersionString ()
+             << " (0x" << String::toHexString (moonbaseClient->getVersion ()) << ")");
+
         // arg 1: transmitAnalytics - whether to transmit analytics at all, default is true.
         // arg 2: includeExtendedDefaultAnalytics - whether to include the extended default analytics, default is false.
         // Enbaling this will send a default set of analytics to the Moonbase backend. 
@@ -120,16 +123,9 @@ MainComponent::MainComponent()
 
     setSize (800, 600);
 
-    if (juce::RuntimePermissions::isRequired (juce::RuntimePermissions::recordAudio)
-        && ! juce::RuntimePermissions::isGranted (juce::RuntimePermissions::recordAudio))
-    {
-        juce::RuntimePermissions::request (juce::RuntimePermissions::recordAudio,
-                                           [&] (bool granted) { setAudioChannels (granted ? 2 : 0, 2); });
-    }
-    else
-    {
-        setAudioChannels (2, 2);
-    }
+    // This app only writes to the output. Opening the default input as well
+    // can force the output device to adopt the input's sample rate.
+    setAudioChannels (0, 2);
 }
 
 MainComponent::~MainComponent()
